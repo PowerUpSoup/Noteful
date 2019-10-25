@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
-import {Route, Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
+import AddFolder from '../AddFolder/AddFolder';
+import AddNote from '../AddNote/AddNote';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './App.css';
@@ -29,10 +32,10 @@ class App extends Component {
                 return Promise.all([notesRes.json(), foldersRes.json()]);
             })
             .then(([notes, folders]) => {
-                this.setState({notes, folders});
+                this.setState({ notes, folders });
             })
             .catch(error => {
-                console.error({error});
+                console.error({ error });
             });
     }
 
@@ -42,9 +45,22 @@ class App extends Component {
         });
     };
 
+    handleAddFolder = folder => {
+        this.setState({
+            folder: this.state.folders.push(folder)
+        })
+    }
+
+    handleAddNote = note => {
+        this.setState({
+            note: this.state.notes.push(note)
+        })
+    }
+
     renderNavRoutes() {
         return (
             <>
+            <ErrorBoundary message="this is an error in the nav bar">
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -56,6 +72,7 @@ class App extends Component {
                 <Route path="/note/:noteId" component={NotePageNav} />
                 <Route path="/add-folder" component={NotePageNav} />
                 <Route path="/add-note" component={NotePageNav} />
+            </ErrorBoundary>
             </>
         );
     }
@@ -63,6 +80,7 @@ class App extends Component {
     renderMainRoutes() {
         return (
             <>
+            <ErrorBoundary message="This is an error in the main window">
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -72,31 +90,37 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
+                <Route path="/add-folder" component={AddFolder} />
+                <Route path="/add-note" component={AddNote} />
+            </ErrorBoundary>
+
             </>
         );
     }
+
 
     render() {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteNote: this.handleDeleteNote
+            deleteNote: this.handleDeleteNote,
+            addFolder: this.handleAddFolder,
+            addNote: this.handleAddNote
         };
         return (
-            <ApiContext.Provider value={value}>
-                <div className="App">
-                    <nav className="App__nav">{this.renderNavRoutes()}</nav>
-                    <header className="App__header">
-                        <h1>
-                            <Link to="/">Noteful</Link>{' '}
-                            <FontAwesomeIcon icon="check-double" />
-                        </h1>
-                    </header>
-                    <main className="App__main">{this.renderMainRoutes()}</main>
-                </div>
-            </ApiContext.Provider>
+                <ApiContext.Provider value={value}>
+                    <div className="App">
+                        <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                        <header className="App__header">
+                            <h1>
+                                <Link to="/">Noteful</Link>{' '}
+                                <FontAwesomeIcon icon="check-double" />
+                            </h1>
+                        </header>
+                        <main className="App__main">{this.renderMainRoutes()}</main>
+                    </div>
+                </ApiContext.Provider>
         );
     }
 }
-
 export default App;
