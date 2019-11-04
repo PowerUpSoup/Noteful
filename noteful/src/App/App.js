@@ -80,7 +80,7 @@ class App extends Component {
     renderMainRoutes() {
         return (
             <>
-            <ErrorBoundary message="This is an error in the main window">
+            
                 {['/', '/folder/:folderId'].map(path => (
                     <Route
                         exact
@@ -92,7 +92,7 @@ class App extends Component {
                 <Route path="/note/:noteId" component={NotePageMain} />
                 <Route path="/add-folder" component={AddFolder} />
                 <Route path="/add-note" component={AddNote} />
-            </ErrorBoundary>
+            
 
             </>
         );

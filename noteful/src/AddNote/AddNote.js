@@ -32,8 +32,8 @@ export default class AddNote extends Component {
           return res.json().then(e => Promise.reject(e))
         return res.json()
       })
-      .then(() => {
-        this.context.addNote({ name, folderId, content, modified  })
+      .then((data) => {
+        this.context.addNote({ name, folderId, content, modified, id:data.id  })
       }).catch(error => {
         console.error({ error })
       })
@@ -52,7 +52,7 @@ export default class AddNote extends Component {
                         id="nameInput"
                         required
                         ref='nameInput'
-                        defaultValue="Note Name"
+                        placeholder="Note Name"
                     />
                     <br></br>
                     <label>Folder:</label>
@@ -71,7 +71,7 @@ export default class AddNote extends Component {
                 </label>
                 <input  type="text"
                         className="note-content-form"
-                        defaultValue="content"
+                        placeholder="content"
                         id="content"
                         ref='contentInput'
                 />

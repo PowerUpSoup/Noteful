@@ -42,11 +42,11 @@ export default class AddFolder extends Component {
         }}>
           <input type="text"
             className="registration__control"
-            name="lksflsjf"
+            name="name"
             required
             id="name"
             ref="folderInput"
-            defaultValue="Folder Name"
+            placeholder="Folder Name"
           />
           <button type="submit">Submit</button>
         </form>
