@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
 import config from '../config.js';
+import { Redirect } from 'react-router-dom';
 import ApiContext from '../ApiContext';
 
 export default class AddFolder extends Component {
 
   static contextType = ApiContext;
 
-
-
   handleSubmit = (e) => {
     e.preventDefault();
     // const name = e.target.name.value;
     const name = this.refs.folderInput.value
+
 
     fetch(`${config.API_ENDPOINT}/folders/`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({name})
+      body: JSON.stringify({ name })
     })
       .then(res => {
         if (!res.ok)
           return res.json().then(e => Promise.reject(e))
         return res.json()
       })
-      .then(() => {
-        this.context.addFolder({ name })
+      .then((data) => {
+        this.context.addFolder({ name, id: data.id })
         console.log(name)
+        return data;
+      })
+      .then(() => {
+        return (
+          <>
+            <Redirect to="/folder/{id:data.id}" />
+          </>)
       })
       .catch(error => {
         console.error({ error })
