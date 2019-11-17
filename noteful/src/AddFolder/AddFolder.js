@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import config from '../config.js';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import ApiContext from '../ApiContext';
 
-export default class AddFolder extends Component {
+ class AddFolder extends Component {
 
   static contextType = ApiContext;
 
@@ -11,7 +11,6 @@ export default class AddFolder extends Component {
     e.preventDefault();
     // const name = e.target.name.value;
     const name = this.refs.folderInput.value
-
 
     fetch(`${config.API_ENDPOINT}/folders/`, {
       method: 'POST',
@@ -27,18 +26,12 @@ export default class AddFolder extends Component {
       })
       .then((data) => {
         this.context.addFolder({ name, id: data.id })
-        console.log(name)
-        return data;
-      })
-      .then(() => {
-        return (
-          <>
-            <Redirect to="/folder/{id:data.id}" />
-          </>)
       })
       .catch(error => {
         console.error({ error })
       })
+
+      this.props.history.push('/')
   }
 
   render() {
@@ -61,3 +54,5 @@ export default class AddFolder extends Component {
     )
   }
 }
+
+export default withRouter(AddFolder);

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import config from '../config.js';
 import ApiContext from '../ApiContext';
+import { withRouter } from 'react-router-dom';
 
-export default class AddNote extends Component {
+class AddNote extends Component {
     static contextType = ApiContext;
 
     formatDateTime() {
@@ -34,6 +35,7 @@ export default class AddNote extends Component {
       })
       .then((data) => {
         this.context.addNote({ name, folderId, content, modified, id:data.id  })
+        this.props.history.push('/')
       }).catch(error => {
         console.error({ error })
       })
@@ -82,3 +84,5 @@ export default class AddNote extends Component {
         )
     }
 }
+
+export default withRouter(AddNote);

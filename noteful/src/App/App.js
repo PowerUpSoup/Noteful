@@ -39,6 +39,11 @@ class App extends Component {
             });
     }
 
+    handleReroute() {
+        console.log('reroute executed')
+        
+    }
+
     handleDeleteNote = noteId => {
         this.setState({
             notes: this.state.notes.filter(note => note.id !== noteId)
@@ -49,6 +54,7 @@ class App extends Component {
         this.setState({
             folder: this.state.folders.push(folder)
         })
+        this.handleReroute()
     }
 
     handleAddNote = note => {
