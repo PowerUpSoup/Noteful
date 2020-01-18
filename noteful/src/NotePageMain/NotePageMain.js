@@ -16,9 +16,9 @@ export default class NotePageMain extends React.Component {
     this.props.history.push(`/`)
   }
 
-  render() {
-    const { notes=[] } = this.context
-    const { noteId } = this.props.match.params
+  render() {    
+    const { notes = [] } = this.context
+    const noteId = parseInt(this.props.match.params.noteId)
     const note = findNote(notes, noteId) || { content: '' }
     return (
       <section className='NotePageMain'>

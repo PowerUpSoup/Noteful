@@ -24,6 +24,7 @@ class App extends Component {
             fetch(`${config.API_ENDPOINT}/folders`)
         ])
             .then(([notesRes, foldersRes]) => {
+                
                 if (!notesRes.ok)
                     return notesRes.json().then(e => Promise.reject(e));
                 if (!foldersRes.ok)
@@ -40,7 +41,7 @@ class App extends Component {
     }
 
     handleReroute() {
-        console.log('reroute executed')
+       
         
     }
 

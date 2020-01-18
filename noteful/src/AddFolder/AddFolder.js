@@ -9,7 +9,7 @@ import ApiContext from '../ApiContext';
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // const name = e.target.name.value;
+    //const name = e.target.name.value;
     const name = this.refs.folderInput.value
 
     fetch(`${config.API_ENDPOINT}/folders/`, {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
@@ -6,7 +6,7 @@ import ApiContext from '../ApiContext'
 import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
 
-export default class NoteListNav extends React.Component {
+export default class NoteListNav extends Component {
   static contextType = ApiContext;
 
   render() {

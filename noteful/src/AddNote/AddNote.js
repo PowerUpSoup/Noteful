@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import config from '../config.js';
 import ApiContext from '../ApiContext';
 import { withRouter } from 'react-router-dom';
 
-class AddNote extends Component {
+class AddNote extends React.Component {
     static contextType = ApiContext;
 
     formatDateTime() {
@@ -18,7 +18,7 @@ class AddNote extends Component {
       e.preventDefault();
       const name = this.refs.nameInput.value;
       const content = this.refs.contentInput.value;
-      const folderId = this.refs.folderId.value;
+      const folderId = parseInt(this.refs.folderId.value);
       const modified = `${this.formatDateTime()}`
 
       fetch(`${config.API_ENDPOINT}/notes/`, {
